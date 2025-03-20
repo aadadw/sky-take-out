@@ -13,6 +13,7 @@ import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.statement.create.table.Index;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,6 +99,23 @@ public class EmployeeController {
         log.info("员工id：{}，将要修改状态代码：{}",status,id);
         employeeService.changeStatus(id,status);
         return Result.success();
+    }
+    //根据id查询员工信息
+    @GetMapping("/{id}")
+    @ApiOperation("查询员工信息")
+    public Result getEmpById(@PathVariable Integer id){
+        log.info("查询员工id：{}",id);
+        Employee employee = employeeService.getEmpById(id);
+
+        return Result.success(employee);
+    }
+    //修改员工
+    @PutMapping()
+    @ApiOperation("修改员工")
+    public Result<Employee> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+        log.info("修改员工信息:{}",employeeDTO);
+        Employee employee = employeeService.updateEmployee(employeeDTO);
+        return Result.success(employee);
     }
 
 }

@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setUpdateTime(LocalDateTime.now());
         employee.setCreateTime(LocalDateTime.now());
         //设置当前记录创建人id和修改人id（暂时写死，后面学）todo是特殊标识表示以后实现
-        //TODO
+        //
         employee.setCreateUser(BaseContext.getCurrentId());
         employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.insert(employee);
@@ -102,5 +102,22 @@ public class EmployeeServiceImpl implements EmployeeService {
        employee.setStatus(status);
 
         employeeMapper.update(employee);
+    }
+//回显
+    @Override
+    public Employee getEmpById(Integer id) {
+        Employee employee = employeeMapper.selete(id);
+        employee.setPassword("****");//即使密码经过md5加密也不能返回给前端
+        return employee;
+    }
+//修改员工
+    @Override
+    public Employee updateEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+        return null;
     }
 }

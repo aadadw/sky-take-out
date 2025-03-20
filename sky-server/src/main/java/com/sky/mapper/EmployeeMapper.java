@@ -31,4 +31,6 @@ public interface EmployeeMapper {
 
     List<Employee> list(EmployeePageQueryDTO employeePageQueryDTO);
     void update(Employee employee);
+    @Select("select * from employee where id = #{id}")
+    Employee selete(Integer id);
 }
